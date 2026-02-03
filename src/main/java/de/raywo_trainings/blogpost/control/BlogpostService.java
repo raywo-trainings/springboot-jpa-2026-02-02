@@ -1,5 +1,6 @@
 package de.raywo_trainings.blogpost.control;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -21,32 +22,83 @@ public class BlogpostService {
 
   public void initializeData() {
     final Blogpost blogpost1 = new Blogpost(
-        UUID.randomUUID().toString(),
+        "",
         "Blogpost 1",
         "Text 1",
         "Author 1",
-        ZonedDateTime.parse("2021-02-01"),
-        ZonedDateTime.parse("2021-02-01"));
-    blogposts.put(blogpost1.getId(), blogpost1);
+        ZonedDateTime.parse("2021-02-02T07:00:00+01:00"),
+        ZonedDateTime.parse("2021-02-02T12:27:00+01:00"));
+    createBlogpost(blogpost1);
 
     final Blogpost blogpost2 = new Blogpost(
-        UUID.randomUUID().toString(),
+        "",
         "Blogpost 2",
         "Text 2",
         "Author 2",
-        ZonedDateTime.parse("2021-02-02"),
-        ZonedDateTime.parse("2021-02-02"));
-    blogposts.put(blogpost2.getId(), blogpost2);
+        ZonedDateTime.parse("2021-02-02T07:00:00+01:00"),
+        ZonedDateTime.parse("2021-02-02T12:27:00+01:00"));
+    createBlogpost(blogpost2);
   }
 
 
+  @NonNull
   public Collection<Blogpost> getBlogposts() {
     return blogposts.values();
   }
 
 
-  public Blogpost getById(String id) {
+  public Blogpost getById(@NonNull String id) {
     return blogposts.get(id);
+  }
+
+
+  public Blogpost createBlogpost(@NonNull Blogpost blogpost) {
+    var newId = UUID.randomUUID().toString();
+    var now = ZonedDateTime.now();
+
+    var newBlogpost = new Blogpost(
+        newId,
+        blogpost.getTitle(),
+        blogpost.getText(),
+        blogpost.getAuthor(),
+        now,
+        now
+    );
+
+    blogposts.put(newId, newBlogpost);
+
+    return newBlogpost;
+  }
+
+
+  public Blogpost updateBlogpost(@NonNull String id,
+                                 @NonNull Blogpost blogpost) {
+    var oldBlogpost = blogposts.get(id);
+
+    if (oldBlogpost == null) {
+      return null;
+    }
+
+    var createdAt = oldBlogpost.getCreatedAt();
+    var updatedAt = ZonedDateTime.now();
+
+    var newBlogpost = new Blogpost(
+        id,
+        blogpost.getTitle(),
+        blogpost.getText(),
+        blogpost.getAuthor(),
+        createdAt,
+        updatedAt
+    );
+
+    blogposts.put(id, newBlogpost);
+
+    return newBlogpost;
+  }
+
+
+  public void deleteBlogpost(@NonNull String id) {
+    blogposts.remove(id);
   }
 
 }

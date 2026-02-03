@@ -3,6 +3,8 @@ package de.raywo_trainings.blogpost.boundary;
 import de.raywo_trainings.blogpost.control.Blogpost;
 import org.springframework.stereotype.Component;
 
+import java.time.ZonedDateTime;
+
 @Component
 public class BlogpostMapper {
 
@@ -14,6 +16,18 @@ public class BlogpostMapper {
         blogpost.getAuthor(),
         blogpost.getCreatedAt().toString(),
         blogpost.getUpdatedAt().toString());
+  }
+
+
+  public Blogpost map(BlogpostDto dto) {
+    return new Blogpost(
+        dto.getId(),
+        dto.getTitle(),
+        dto.getText(),
+        dto.getAuthor(),
+        ZonedDateTime.parse(dto.getCreatedAt()),
+        ZonedDateTime.parse(dto.getUpdatedAt())
+    );
   }
 
 }
