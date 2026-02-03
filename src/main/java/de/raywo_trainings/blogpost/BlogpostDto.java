@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BlogpostDto {
 
+  private String id;
   private String title;
   private String text;
   private String author;
