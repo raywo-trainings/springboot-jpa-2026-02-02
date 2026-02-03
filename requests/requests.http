@@ -1,5 +1,10 @@
 ### GET request to example server
 GET http://localhost:8080/
 
-###
+### GET list of all blogposts
 GET http://localhost:8080/blogposts
+Accept: application/json
+
+### GET single blogpost by ID
+GET http://localhost:8080/blogposts/3fc8864d-8e0d-48d1-af4e-a35466150b6c
+Accept: application/json
