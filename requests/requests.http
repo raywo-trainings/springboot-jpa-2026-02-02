@@ -6,7 +6,7 @@ GET http://localhost:8080/blogposts
 Accept: application/json
 
 ### GET single blogpost by ID
-GET http://localhost:8080/blogposts/27ce87a8-a7e0-4e2e-afe1-5b5c11012c11
+GET http://localhost:8080/blogposts/3ceed4e8-f8fd-4e2b-bf47-f43419b26156
 Accept: application/json
 
 ### CREATE a blogpost

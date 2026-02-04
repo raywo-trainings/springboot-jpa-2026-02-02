@@ -1,6 +1,6 @@
-package de.raywo_trainings.blogpost.boundary;
+package de.raywo_trainings.blogpost_service.blogposts.boundary;
 
-import de.raywo_trainings.blogpost.control.Blogpost;
+import de.raywo_trainings.blogpost_service.blogposts.control.Blogpost;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;

@@ -1,4 +1,4 @@
-package de.raywo_trainings.blogpost.boundary;
+package de.raywo_trainings.blogpost_service.blogposts.boundary;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package de.raywo_trainings.blogpost.control;
+package de.raywo_trainings.blogpost_service.blogposts.control;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
