@@ -1,6 +1,7 @@
 package de.raywo_trainings.blogpost_service.blogposts.boundary;
 
 import de.raywo_trainings.blogpost_service.blogposts.control.BlogpostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class BlogpostController {
 
 
   @GetMapping()
-  public Collection<BlogpostDto> getBlogposts() {
+  public Collection<BlogpostReadDto> getBlogposts() {
     return service.getBlogposts()
         .stream()
         .map(mapper::map)
@@ -26,14 +27,14 @@ public class BlogpostController {
 
 
   @GetMapping("/{id}")
-  public BlogpostDto getBlogpost(@PathVariable String id) {
+  public BlogpostReadDto getBlogpost(@PathVariable String id) {
     return mapper.map(service.getById(id));
   }
 
 
   @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
-  public BlogpostDto createBlogpost(@RequestBody BlogpostDto dto) {
+  public BlogpostReadDto createBlogpost(@RequestBody @Valid BlogpostWriteDto dto) {
     var newBlogpost = service.createBlogpost(mapper.map(dto));
 
     return mapper.map(newBlogpost);
@@ -41,8 +42,8 @@ public class BlogpostController {
 
 
   @PutMapping("/{id}")
-  public BlogpostDto updateBlogpost(@PathVariable String id,
-                                    @RequestBody BlogpostDto dto) {
+  public BlogpostReadDto updateBlogpost(@PathVariable String id,
+                                        @RequestBody @Valid BlogpostWriteDto dto) {
     var updatedBlogpost = service.updateBlogpost(id, mapper.map(dto));
 
     return mapper.map(updatedBlogpost);

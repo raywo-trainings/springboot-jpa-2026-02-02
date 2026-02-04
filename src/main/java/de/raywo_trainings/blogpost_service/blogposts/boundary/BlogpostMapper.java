@@ -1,15 +1,14 @@
 package de.raywo_trainings.blogpost_service.blogposts.boundary;
 
-import de.raywo_trainings.blogpost_service.blogposts.control.Blogpost;
+import de.raywo_trainings.blogpost_service.blogposts.control.BlogpostRead;
+import de.raywo_trainings.blogpost_service.blogposts.control.BlogpostWrite;
 import org.springframework.stereotype.Component;
-
-import java.time.ZonedDateTime;
 
 @Component
 public class BlogpostMapper {
 
-  public BlogpostDto map(Blogpost blogpost) {
-    return new BlogpostDto(
+  public BlogpostReadDto map(BlogpostRead blogpost) {
+    return new BlogpostReadDto(
         blogpost.getId(),
         blogpost.getTitle(),
         blogpost.getText(),
@@ -19,14 +18,11 @@ public class BlogpostMapper {
   }
 
 
-  public Blogpost map(BlogpostDto dto) {
-    return new Blogpost(
-        dto.getId(),
-        dto.getTitle(),
-        dto.getText(),
-        dto.getAuthor(),
-        ZonedDateTime.parse(dto.getCreatedAt()),
-        ZonedDateTime.parse(dto.getUpdatedAt())
+  public BlogpostWrite map(BlogpostWriteDto dto) {
+    return new BlogpostWrite(
+        dto.title(),
+        dto.text(),
+        dto.author()
     );
   }
 
