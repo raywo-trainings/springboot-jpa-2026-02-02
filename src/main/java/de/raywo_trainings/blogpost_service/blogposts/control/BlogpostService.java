@@ -13,7 +13,7 @@ import java.util.UUID;
 @Service
 public class BlogpostService {
 
-  private final Map<String, Blogpost> blogposts = new HashMap<>();
+  private final Map<String, BlogpostRead> blogposts = new HashMap<>();
 
 
   BlogpostService() {
@@ -22,44 +22,40 @@ public class BlogpostService {
 
 
   public void initializeData() {
-    final Blogpost blogpost1 = new Blogpost(
-        "",
+    final BlogpostWrite blogpost1 = new BlogpostWrite(
         "Blogpost 1",
         "Text 1",
-        "Author 1",
-        ZonedDateTime.parse("2021-02-02T07:00:00+01:00"),
-        ZonedDateTime.parse("2021-02-02T12:27:00+01:00"));
+        "Author 1"
+    );
     createBlogpost(blogpost1);
 
-    final Blogpost blogpost2 = new Blogpost(
-        "",
+    final BlogpostWrite blogpost2 = new BlogpostWrite(
         "Blogpost 2",
         "Text 2",
-        "Author 2",
-        ZonedDateTime.parse("2021-02-02T07:00:00+01:00"),
-        ZonedDateTime.parse("2021-02-02T12:27:00+01:00"));
+        "Author 2"
+    );
     createBlogpost(blogpost2);
   }
 
 
   @NonNull
-  public Collection<Blogpost> getBlogposts() {
+  public Collection<BlogpostRead> getBlogposts() {
     return blogposts.values();
   }
 
 
-  public Blogpost getById(@NonNull String id) {
+  public BlogpostRead getById(@NonNull String id) {
     assertBlogpostExists(id);
 
     return blogposts.get(id);
   }
 
 
-  public Blogpost createBlogpost(@NonNull Blogpost blogpost) {
+  public BlogpostRead createBlogpost(@NonNull BlogpostWrite blogpost) {
     var newId = UUID.randomUUID().toString();
     var now = ZonedDateTime.now();
 
-    var newBlogpost = new Blogpost(
+    var newBlogpost = new BlogpostRead(
         newId,
         blogpost.getTitle(),
         blogpost.getText(),
@@ -74,15 +70,15 @@ public class BlogpostService {
   }
 
 
-  public Blogpost updateBlogpost(@NonNull String id,
-                                 @NonNull Blogpost blogpost) {
+  public BlogpostRead updateBlogpost(@NonNull String id,
+                                     @NonNull BlogpostWrite blogpost) {
     assertBlogpostExists(id);
 
     var oldBlogpost = blogposts.get(id);
     var createdAt = oldBlogpost.getCreatedAt();
     var updatedAt = ZonedDateTime.now();
 
-    var newBlogpost = new Blogpost(
+    var newBlogpost = new BlogpostRead(
         id,
         blogpost.getTitle(),
         blogpost.getText(),

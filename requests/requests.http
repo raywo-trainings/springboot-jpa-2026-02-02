@@ -15,25 +15,20 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "title": "New Blogpost Title",
+  "title": "",
   "text": "This is the content of the new blogpost.",
-  "author": "New Author",
-  "createdAt": "2023-10-27T10:00:00+01:00",
-  "updatedAt": "2023-10-27T10:00:00+01:00"
+  "author": "New Author"
 }
 
 ### UPDATE a blogpost
-PUT http://localhost:8080/blogposts/2305ecb7-5a13-42b4-9f97-ebe976adbd04
+PUT http://localhost:8080/blogposts/7312e653-c101-4bfc-a131-cf045bf7c9f8
 Accept: application/json
 Content-Type: application/json
 
 {
-  "id": "27ce87a8-a7e0-4e2e-afe1-5b5c11012c11",
   "title": "Updated Blogpost Title",
   "text": "This is the updated content of the blogpost.",
-  "author": "Updated Author",
-  "createdAt": "2021-02-01T10:00:00+01:00",
-  "updatedAt": "2023-10-27T11:30:00+01:00"
+  "author": "Updated Author"
 }
 
 ### DELETE a blogpost
