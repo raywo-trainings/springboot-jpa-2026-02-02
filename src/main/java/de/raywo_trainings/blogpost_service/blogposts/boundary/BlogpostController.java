@@ -1,6 +1,6 @@
-package de.raywo_trainings.blogpost.boundary;
+package de.raywo_trainings.blogpost_service.blogposts.boundary;
 
-import de.raywo_trainings.blogpost.control.BlogpostService;
+import de.raywo_trainings.blogpost_service.blogposts.control.BlogpostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

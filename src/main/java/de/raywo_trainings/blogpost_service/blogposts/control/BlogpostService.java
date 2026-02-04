@@ -1,5 +1,6 @@
-package de.raywo_trainings.blogpost.control;
+package de.raywo_trainings.blogpost_service.blogposts.control;
 
+import de.raywo_trainings.blogpost_service.shared.control.NotFoundException;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,8 @@ public class BlogpostService {
 
 
   public Blogpost getById(@NonNull String id) {
+    assertBlogpostExists(id);
+
     return blogposts.get(id);
   }
 
@@ -73,12 +76,9 @@ public class BlogpostService {
 
   public Blogpost updateBlogpost(@NonNull String id,
                                  @NonNull Blogpost blogpost) {
+    assertBlogpostExists(id);
+
     var oldBlogpost = blogposts.get(id);
-
-    if (oldBlogpost == null) {
-      return null;
-    }
-
     var createdAt = oldBlogpost.getCreatedAt();
     var updatedAt = ZonedDateTime.now();
 
@@ -98,7 +98,15 @@ public class BlogpostService {
 
 
   public void deleteBlogpost(@NonNull String id) {
+    assertBlogpostExists(id);
     blogposts.remove(id);
+  }
+
+
+  private void assertBlogpostExists(@NonNull String id) {
+    if (!blogposts.containsKey(id)) {
+      throw new NotFoundException("Blogpost", id);
+    }
   }
 
 }
