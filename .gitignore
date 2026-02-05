@@ -34,3 +34,4 @@ build/
 
 ### Misc ###
 /.claude/settings.local.json
+/.data/

@@ -14,7 +14,7 @@ import java.util.Collection;
 public class BlogpostController {
 
   private final BlogpostService service;
-  private final BlogpostMapper mapper;
+  private final BlogpostDtoMapper mapper;
 
 
   @GetMapping()
