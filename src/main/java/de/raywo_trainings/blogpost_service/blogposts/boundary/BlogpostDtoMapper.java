@@ -5,7 +5,7 @@ import de.raywo_trainings.blogpost_service.blogposts.control.BlogpostWrite;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BlogpostMapper {
+public class BlogpostDtoMapper {
 
   public BlogpostReadDto map(BlogpostRead blogpost) {
     return new BlogpostReadDto(

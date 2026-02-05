@@ -15,7 +15,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "title": "",
+  "title": "My fancy title",
   "text": "This is the content of the new blogpost.",
   "author": "New Author"
 }

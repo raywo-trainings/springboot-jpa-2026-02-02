@@ -1,50 +1,41 @@
 package de.raywo_trainings.blogpost_service.blogposts.control;
 
+import de.raywo_trainings.blogpost_service.blogposts.entity.BlogpostRepository;
 import de.raywo_trainings.blogpost_service.shared.control.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class BlogpostService {
 
-  private final Map<String, BlogpostRead> blogposts = new HashMap<>();
+  private final BlogpostRepository repo;
+  private final BlogpostMapper mapper;
 
 
   @NonNull
   public Collection<BlogpostRead> getBlogposts() {
-    return blogposts.values();
+    return repo.findAll()
+        .stream()
+        .map(mapper::map)
+        .toList();
   }
 
 
   public BlogpostRead getById(@NonNull String id) {
-    assertBlogpostExists(id);
-
-    return blogposts.get(id);
+    return repo.findById(id)
+        .map(mapper::map)
+        .orElseThrow(() -> new NotFoundException("Blogpost", id));
   }
 
 
   public BlogpostRead createBlogpost(@NonNull BlogpostWrite blogpost) {
-    var newId = UUID.randomUUID().toString();
-    var now = ZonedDateTime.now();
+    var newBlogpost = mapper.map(blogpost);
 
-    var newBlogpost = new BlogpostRead(
-        newId,
-        blogpost.getTitle(),
-        blogpost.getText(),
-        blogpost.getAuthor(),
-        now,
-        now
-    );
-
-    blogposts.put(newId, newBlogpost);
-
-    return newBlogpost;
+    return mapper.map(repo.save(newBlogpost));
   }
 
 
@@ -52,33 +43,23 @@ public class BlogpostService {
                                      @NonNull BlogpostWrite blogpost) {
     assertBlogpostExists(id);
 
-    var oldBlogpost = blogposts.get(id);
+    var oldBlogpost = getById(id);
     var createdAt = oldBlogpost.getCreatedAt();
-    var updatedAt = ZonedDateTime.now();
 
-    var newBlogpost = new BlogpostRead(
-        id,
-        blogpost.getTitle(),
-        blogpost.getText(),
-        blogpost.getAuthor(),
-        createdAt,
-        updatedAt
-    );
+    var newBlogpost = mapper.map(blogpost, oldBlogpost.getId(), createdAt);
 
-    blogposts.put(id, newBlogpost);
-
-    return newBlogpost;
+    return mapper.map(repo.save(newBlogpost));
   }
 
 
   public void deleteBlogpost(@NonNull String id) {
     assertBlogpostExists(id);
-    blogposts.remove(id);
+    repo.deleteById(id);
   }
 
 
   private void assertBlogpostExists(@NonNull String id) {
-    if (!blogposts.containsKey(id)) {
+    if (!repo.existsById(id)) {
       throw new NotFoundException("Blogpost", id);
     }
   }

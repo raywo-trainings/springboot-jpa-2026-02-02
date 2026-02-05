@@ -1,6 +1,7 @@
 package de.raywo_trainings.blogpost_service.blogposts.control;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Profile("dev")
+@Slf4j
 public class DataInitializer {
 
   private final BlogpostService service;
@@ -16,6 +18,11 @@ public class DataInitializer {
 
   @EventListener(ApplicationReadyEvent.class)
   public void initializeData() {
+    if (!service.getBlogposts().isEmpty()) {
+      log.info("Database is not empty. Skipping initialization.");
+      return;
+    }
+
     final BlogpostWrite blogpost1 = new BlogpostWrite(
         "Blogpost 1",
         "Text 1",
@@ -29,6 +36,8 @@ public class DataInitializer {
         "Author 2"
     );
     service.createBlogpost(blogpost2);
+
+    log.info("Found empty database. Inserted sample data.");
   }
 
 }

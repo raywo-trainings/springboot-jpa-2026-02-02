@@ -7,6 +7,16 @@ spring:
       fail-on-unknown-properties: true
       fail-on-ignored-properties: true
 
+  datasource:
+    url: jdbc:h2:file:./.data/blogpost
+    username: username
+    password: password
+    driverClassName: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
 logging:
   level:
     root: INFO
