@@ -16,28 +16,6 @@ public class BlogpostService {
   private final Map<String, BlogpostRead> blogposts = new HashMap<>();
 
 
-  BlogpostService() {
-    initializeData();
-  }
-
-
-  public void initializeData() {
-    final BlogpostWrite blogpost1 = new BlogpostWrite(
-        "Blogpost 1",
-        "Text 1",
-        "Author 1"
-    );
-    createBlogpost(blogpost1);
-
-    final BlogpostWrite blogpost2 = new BlogpostWrite(
-        "Blogpost 2",
-        "Text 2",
-        "Author 2"
-    );
-    createBlogpost(blogpost2);
-  }
-
-
   @NonNull
   public Collection<BlogpostRead> getBlogposts() {
     return blogposts.values();

@@ -6,3 +6,9 @@ spring:
     deserialization:
       fail-on-unknown-properties: true
       fail-on-ignored-properties: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: WARN
+    de.raywo_trainings: WARN
