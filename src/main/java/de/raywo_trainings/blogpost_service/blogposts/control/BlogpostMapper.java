@@ -2,23 +2,14 @@ package de.raywo_trainings.blogpost_service.blogposts.control;
 
 import de.raywo_trainings.blogpost_service.blogposts.entity.BlogpostEntity;
 import org.jspecify.annotations.NonNull;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
 import java.time.ZonedDateTime;
 
-@Component
-public class BlogpostMapper {
+@Mapper
+public abstract class BlogpostMapper {
 
-  public BlogpostRead map(BlogpostEntity entity) {
-    return new BlogpostRead(
-        entity.getId(),
-        entity.getTitle(),
-        entity.getText(),
-        entity.getAuthor(),
-        entity.getCreatedAt(),
-        entity.getUpdatedAt()
-    );
-  }
+  abstract BlogpostRead map(BlogpostEntity entity);
 
 
   public BlogpostEntity map(@NonNull BlogpostWrite dto) {

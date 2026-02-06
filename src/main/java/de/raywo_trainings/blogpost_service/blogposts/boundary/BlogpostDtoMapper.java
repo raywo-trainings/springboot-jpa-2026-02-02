@@ -2,28 +2,17 @@ package de.raywo_trainings.blogpost_service.blogposts.boundary;
 
 import de.raywo_trainings.blogpost_service.blogposts.control.BlogpostRead;
 import de.raywo_trainings.blogpost_service.blogposts.control.BlogpostWrite;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-public class BlogpostDtoMapper {
+import java.util.Collection;
 
-  public BlogpostReadDto map(BlogpostRead blogpost) {
-    return new BlogpostReadDto(
-        blogpost.getId(),
-        blogpost.getTitle(),
-        blogpost.getText(),
-        blogpost.getAuthor(),
-        blogpost.getCreatedAt().toString(),
-        blogpost.getUpdatedAt().toString());
-  }
+@Mapper(componentModel = "spring")
+public interface BlogpostDtoMapper {
 
+  BlogpostReadDto map(BlogpostRead blogpost);
 
-  public BlogpostWrite map(BlogpostWriteDto dto) {
-    return new BlogpostWrite(
-        dto.title(),
-        dto.text(),
-        dto.author()
-    );
-  }
+  BlogpostWrite map(BlogpostWriteDto dto);
+
+  Collection<BlogpostReadDto> map(Collection<BlogpostRead> blogposts);
 
 }

@@ -23,10 +23,7 @@ public class BlogpostController {
       @RequestParam(required = false) String author,
       @RequestParam(required = false) LocalDate createdAt
   ) {
-    return service.getBlogposts(author, createdAt)
-        .stream()
-        .map(mapper::map)
-        .toList();
+    return mapper.map(service.getBlogposts(author, createdAt));
   }
 
 
