@@ -4,8 +4,11 @@ import de.raywo_trainings.blogpost_service.blogposts.control.BlogpostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -37,11 +40,18 @@ public class BlogpostController {
 
 
   @PostMapping()
-  @ResponseStatus(HttpStatus.CREATED)
-  public BlogpostReadDto createBlogpost(@RequestBody @Valid BlogpostWriteDto dto) {
+  public ResponseEntity<BlogpostReadDto> createBlogpost(@RequestBody @Valid BlogpostWriteDto dto) {
     var newBlogpost = service.createBlogpost(mapper.map(dto));
 
-    return mapper.map(newBlogpost);
+    URI location = ServletUriComponentsBuilder
+        .fromCurrentRequest()      // /blogposts
+        .path("/{id}")             // /blogposts/{id}
+        .buildAndExpand(newBlogpost.getId())
+        .toUri();
+
+    return ResponseEntity
+        .created(location)
+        .body(mapper.map(newBlogpost));
   }
 
 
