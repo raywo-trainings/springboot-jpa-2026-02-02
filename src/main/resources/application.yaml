@@ -22,3 +22,9 @@ logging:
     root: INFO
     org.springframework.web: WARN
     de.raywo_trainings: WARN
+
+cors:
+  allow:
+    origins: ${CORS_ALLOWED_ORIGINS:*}
+    credentials: ${CORS_ALLOW_CREDENTIALS:false}
+    headers: ${CORS_ALLOWED_HEADERS:[]}
