@@ -18,7 +18,7 @@ public class DataInitializer {
 
   @EventListener(ApplicationReadyEvent.class)
   public void initializeData() {
-    if (!service.getBlogposts().isEmpty()) {
+    if (!service.getBlogposts(null, null).isEmpty()) {
       log.info("Database is not empty. Skipping initialization.");
       return;
     }

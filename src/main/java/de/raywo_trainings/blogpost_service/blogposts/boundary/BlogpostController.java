@@ -3,14 +3,17 @@ package de.raywo_trainings.blogpost_service.blogposts.boundary;
 import de.raywo_trainings.blogpost_service.blogposts.control.BlogpostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 @RestController
 @RequestMapping("/blogposts")
 @RequiredArgsConstructor
+@Slf4j
 public class BlogpostController {
 
   private final BlogpostService service;
@@ -18,8 +21,13 @@ public class BlogpostController {
 
 
   @GetMapping()
-  public Collection<BlogpostReadDto> getBlogposts() {
-    return service.getBlogposts()
+  public Collection<BlogpostReadDto> getBlogposts(
+      @RequestParam(required = false) String author,
+      @RequestParam(required = false) LocalDate createdAt
+  ) {
+    log.info("Get blogposts for author {} and created at {}", author, createdAt);
+
+    return service.getBlogposts(author, createdAt)
         .stream()
         .map(mapper::map)
         .toList();
