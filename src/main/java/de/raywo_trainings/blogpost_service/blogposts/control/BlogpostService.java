@@ -1,16 +1,15 @@
 package de.raywo_trainings.blogpost_service.blogposts.control;
 
-import de.raywo_trainings.blogpost_service.blogposts.entity.BlogpostEntity;
 import de.raywo_trainings.blogpost_service.blogposts.entity.BlogpostRepository;
+import de.raywo_trainings.blogpost_service.blogposts.entity.BlogpostSpecs;
 import de.raywo_trainings.blogpost_service.shared.control.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.Collection;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,27 +22,11 @@ public class BlogpostService {
   @NonNull
   public Collection<BlogpostRead> getBlogposts(String author,
                                                LocalDate createdAt) {
-    List<BlogpostEntity> blogposts;
+    var spec = Specification
+        .where(BlogpostSpecs.hasAuthor(author))
+        .and(BlogpostSpecs.createdAtOnDay(createdAt, null));
 
-    if (author != null && createdAt != null) {
-      ZonedDateTime start = createdAt.atStartOfDay(ZonedDateTime.now().getZone());
-      ZonedDateTime end = start.plusDays(1);
-      blogposts = repo.findByAuthorAndCreatedAtBetween(
-          author,
-          start,
-          end
-      );
-    } else if (author != null) {
-      blogposts = repo.findByAuthor(author);
-    } else if (createdAt != null) {
-      ZonedDateTime start = createdAt.atStartOfDay(ZonedDateTime.now().getZone());
-      ZonedDateTime end = start.plusDays(1);
-      blogposts = repo.findByCreatedAtBetween(start, end);
-    } else {
-      blogposts = repo.findAll();
-    }
-
-    return blogposts
+    return repo.findAll(spec)
         .stream()
         .map(mapper::map)
         .toList();
