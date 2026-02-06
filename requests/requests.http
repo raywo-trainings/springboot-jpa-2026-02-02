@@ -5,6 +5,19 @@ GET http://localhost:8080/
 GET http://localhost:8080/blogposts
 Accept: application/json
 
+### GET list of all blogposts by author
+GET http://localhost:8080/blogposts?author=Author%201
+Accept: application/json
+
+### GET list of all blogposts by author
+GET http://localhost:8080/blogposts?createdAt=2026-02-05
+Accept: application/json
+
+### GET list of all blogposts by author
+GET http://localhost:8080/blogposts?author=Author%202&createdAt=2026-02-05
+Accept: application/json
+
+
 ### GET single blogpost by ID
 GET http://localhost:8080/blogposts/3ceed4e8-f8fd-4e2b-bf47-f43419b26156
 Accept: application/json

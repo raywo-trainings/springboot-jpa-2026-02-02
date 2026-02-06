@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 @RestController
@@ -18,8 +19,11 @@ public class BlogpostController {
 
 
   @GetMapping()
-  public Collection<BlogpostReadDto> getBlogposts() {
-    return service.getBlogposts()
+  public Collection<BlogpostReadDto> getBlogposts(
+      @RequestParam(required = false) String author,
+      @RequestParam(required = false) LocalDate createdAt
+  ) {
+    return service.getBlogposts(author, createdAt)
         .stream()
         .map(mapper::map)
         .toList();
